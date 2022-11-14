@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="com.dss.client" level="INFO"/>
+
+    <property name="FILENAME" value="digistream-app-logs" />
+    <property name="LOG_PATTERN" value="%green(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %magenta(%C{1.}): %msg%n%throwable" />
+    <property name="LOG_PATTERN_INPUT" value="%d{ISO8601} %-5level [%t] %C{1.}: %msg%n%throwable" />
+    <property name="APP_LOG_ROOT" value="C:/applogs/dss-logs/dss_app_logs/"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="smsLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_ROOT}/${FILENAME}.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN_INPUT}</pattern>
+        </encoder>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${APP_LOG_ROOT}/${FILENAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!-- LOG everything at ERROR level -->
+    <root name="com.dss.client" additivity="false" level="error">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </root>
+
+    <!-- LOG everything at INFO level -->
+    <root name="com.dss.client" additivity="false" level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </root>
+
+    <!-- LOG everything at WARN level -->
+    <root name="com.dss.client" additivity="false" level="warn">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </root>
+
+    <!-- LOG everything at DEBUG level -->
+    <logger name="com.dss.client" additivity="false" level="debug">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+
+    <logger name="org.springframework.security.web.context.HttpSessionSecurityContextRepository" level="error" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+
+    <!-- LOG hibernate SQL statements -->
+    <logger name="org.hibernate.SQL" level="debug" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+
+    <!-- LOG hibernate SQL parameters -->
+    <logger name="org.hibernate.type" level="trace" additivity="false">
+        <appender-ref ref="smsLog" />
+    </logger>
+
+    <!-- LOG hibernate SQL parameters - to reduce logging due to above trace level setting -->
+    <logger name="org.hibernate.type.BasicTypeRegistry" level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+    <logger name="org.hibernate.type.CollectionType" level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="smsLog" />
+    </logger>
+
+</configuration>

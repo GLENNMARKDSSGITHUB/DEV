@@ -1,0 +1,62 @@
+#SERVER PORT
+server:
+  port: 9007
+
+#SPRING APPLICATION NAME
+spring:
+  application:
+    name: dss5-ms-actor-v1
+
+  #SPRING DATASOURCE CONFIGURATION
+  datasource:
+    url: jdbc:postgresql://localhost:5432/DSS_DB_V1
+    username: postgres
+    password: password
+
+  #JPA AND HIBERNATE PROPERTIES
+  jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        jdbc:
+          timezone: GMT+8
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+#SLF4J LOGBACK CONFIGURATION
+logging:
+  level:
+    root: error
+    org.springframework: debug
+    org.hibernate: error
+
+# REGISTER WITH EUREKA
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+# FEIGN CLIENT CONFIGURATION
+app:
+  feign:
+    config:
+      name: dss5-ms-actor-v1
+      url: http://localhost:9007
+
+feign:
+  client:
+    config:
+      instantaneous:
+        connect-timeout: 20000
+        read-timeout: 20000
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic

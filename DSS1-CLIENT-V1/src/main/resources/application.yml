@@ -1,0 +1,36 @@
+server:
+  port: 7070
+
+#SERVER
+spring:
+  application.name: dss1-client-v1
+  main:
+    allow-bean-definition-overriding: true
+
+#REGISTER WITH EUREKA
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+#SLF4J LOGBACK CONFIGURATION
+logging:
+  level:
+    root: error
+    org.springframework: debug
+    org.hibernate: error
+
+
+feign:
+  login-register-name: DSS3-MS-LOGIN-V1
+  login-register-url: http://localhost:9005
+  movie-name: DSS4-MS-MOVIE-V1
+  movie-url: http://localhost:9006
+  actor-name: DSS5-MS-ACTOR-V1
+  actor-url: http://localhost:9007
+  review-name: DSS6-MS-REVIEW-V1
+  review-url: http://localhost:9008
