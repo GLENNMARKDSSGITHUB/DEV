@@ -1,6 +1,7 @@
 package com.dss.client.service.auth;
 
 import com.dss.client.proxy.auth.AuthenticationProxy;
+import com.dss.client.utils.DssCommonMessageDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     AuthenticationProxy authenticationStoreClient;
 
     @Override
-    public String login(Object obj) {
+    public DssCommonMessageDetails login(Object obj) {
         return authenticationStoreClient.login(obj);
     }
 

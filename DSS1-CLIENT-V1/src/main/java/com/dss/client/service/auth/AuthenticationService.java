@@ -1,6 +1,8 @@
 package com.dss.client.service.auth;
 
+import com.dss.client.utils.DssCommonMessageDetails;
+
 public interface AuthenticationService {
 
-    String login(Object obj);
+    DssCommonMessageDetails login(Object obj);
 }
