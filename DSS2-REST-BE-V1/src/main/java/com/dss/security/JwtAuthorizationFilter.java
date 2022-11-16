@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UsersRepository usersRepository;

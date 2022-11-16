@@ -1,12 +1,16 @@
 package com.dss.security;
 
 import com.auth0.jwt.JWT;
-import com.dss.model.LoginViewModel;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.dss.entity.user.Users;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -14,18 +18,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+        setFilterProcessesUrl("/API/login.do");
     }
 
     /* Trigger when we issue POST request to /login.do
@@ -35,9 +39,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         // Grab credentials and map them to login viewmodel
-        LoginViewModel credentials = null;
+        Users credentials = null;
         try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
+            credentials = new ObjectMapper().readValue(request.getInputStream(), Users.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,9 +49,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create login token
         assert credentials != null;
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                credentials.getUsername(),
+                credentials.getEmail(),
                 credentials.getPassword(),
                 new ArrayList<>());
+
+        log.debug("JwtAuthenticationFilter | attemptAuthentication | username : {}", credentials.getEmail());
+        log.debug("JwtAuthenticationFilter | attemptAuthentication | password : {}", credentials.getPassword());
 
         // Authenticate user
         return authenticationManager.authenticate(authenticationToken);
@@ -57,13 +64,29 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         DssUserDetailsImpl principal = (DssUserDetailsImpl) authResult.getPrincipal();
 
-        // Create JWT Token
-        String token = JWT.create()
+        Algorithm algorithm = Algorithm.HMAC512(JwtProperties.JWT_SECRET.getBytes());
+        String access_token = JWT.create()
                 .withSubject(principal.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .sign(HMAC512(JwtProperties.JWT_SECRET.getBytes()));
+                .withIssuer(request.getRequestURL().toString())
+                .withClaim("roles", principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0))
+                .sign(algorithm);
 
-        // Add token in response
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX +  token);
+        String refresh_token = JWT.create()
+                .withSubject(principal.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withIssuer(request.getRequestURL().toString())
+                .sign(algorithm);
+
+        log.debug("JwtAuthenticationFilter | successfulAuthentication | access_token : {}", access_token);
+        log.debug("JwtAuthenticationFilter | successfulAuthentication | refresh_token : {}", refresh_token);
+        log.debug("JwtAuthenticationFilter | successfulAuthentication | expires at : {}", new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME));
+
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("access_token", access_token);
+        tokens.put("refresh_token", refresh_token);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
 }

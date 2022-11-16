@@ -71,14 +71,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.usersRepository))
                 .authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
-                .antMatchers(HttpMethod.POST, "/API/login.do")
+                .antMatchers(HttpMethod.POST, "/API/login.do", "/API/token/generate-token.do")
                 .permitAll()
                 .antMatchers("/API/registration/**")
                 .hasAnyAuthority(UserRoles.ROLE_SUPER_ADMIN.getStrRole(), UserRoles.ROLE_ADMIN.getStrRole())
@@ -91,7 +88,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.usersRepository));
     }
 
     /** Returns a BCryptPasswordEncoder with the strength of 12

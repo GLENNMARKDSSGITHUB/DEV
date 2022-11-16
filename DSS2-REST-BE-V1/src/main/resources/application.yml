@@ -23,6 +23,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/DSS_DB_V1
     username: postgres
     password: password
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+    store-type: jdbc
 
   #JPA AND HIBERNATE PROPERTIES
   jpa:

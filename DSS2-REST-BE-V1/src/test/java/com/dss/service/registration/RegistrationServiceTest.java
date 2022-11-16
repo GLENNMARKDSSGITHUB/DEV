@@ -35,9 +35,7 @@ public class RegistrationServiceTest {
 
     @Test
     public void testRegisterAccountSuccess(){
-        userRepository.save(resources.user());
-        rolesRepository.save(resources.role());
-        Mockito.when(userRepository.save(resources.user())).thenReturn(resources.user());
+        Mockito.when(userRepository.findUserByEmailAddress(resources.user().getEmail())).thenReturn(resources.user());
         DssCommonMessageDetails commonMsgDtl = registrationService.registerAccount(resources.userDto());
         Assert.assertEquals(Boolean.TRUE, commonMsgDtl.isSuccess());
     }

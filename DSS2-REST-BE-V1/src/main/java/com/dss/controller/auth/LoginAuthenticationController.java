@@ -7,10 +7,17 @@
 package com.dss.controller.auth;
 
 import com.dss.dto.user.UsersDTO;
+import com.dss.security.JwtAuthorizationFilter;
 import com.dss.service.auth.LoginAuthenticationService;
 import com.dss.util.utils.DssCommonMessageDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * This class is a controller layer for DSS Login and Authentication
