@@ -39,14 +39,6 @@ public class JwtUtility {
         return jObject.getString("resources").replaceAll("[\\[\\]\"]", "");
     }
 
-    public String getPermission(String token) throws JSONException {
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] chunks = token.split("\\.");
-        String payload = new String(decoder.decode(chunks[1]));
-        JSONObject jObject  = new JSONObject(payload);
-        return jObject.getString("permissions").replaceAll("[\\[\\]\"]", "");
-    }
-
     public String getAction(String token) throws JSONException {
         Base64.Decoder decoder = Base64.getUrlDecoder();
         String[] chunks = token.split("\\.");

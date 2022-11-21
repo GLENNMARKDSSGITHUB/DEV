@@ -23,7 +23,7 @@ import static com.dss.gateway.util.jwt.JwtProperties.*;
 @RefreshScope
 @Component
 @Slf4j
-public class RegistrationAuthFilter implements GatewayFilter {
+public class AuthenticationFilter implements GatewayFilter {
 
     @Autowired
     private JwtUtility jwtUtility;
@@ -55,7 +55,7 @@ public class RegistrationAuthFilter implements GatewayFilter {
                 //This method will validate the users' token.
                 jwtUtility.validateToken(token);
 
-                //check the resources if user contains R_REGISTRATION
+                //check the resource String if user contains resourceCode String retrieved from the database
                 String resourceCode = requestPathRepository.getPathCodeByRequestPath(path);
                 String resource = jwtUtility.getResources(token);
                 log.debug("JwtAuthenticationFilter | filter | resource : " + resource);
@@ -65,7 +65,7 @@ public class RegistrationAuthFilter implements GatewayFilter {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
                 }
 
-                //check the actions if user have no action name A_CREATE_ACCOUNT or A_VIEW_ACCOUNT
+                //check the action String if user contains actionCode retrieved from the database
                 String action = jwtUtility.getAction(token);
                 String actionCode = requestPathRepository.getActionCodeByRequestPath(path);
                 log.debug("JwtAuthenticationFilter | filter | action : " + action);

@@ -1,6 +1,6 @@
 package com.dss.gateway.configuration;
 
-import com.dss.gateway.filter.RegistrationAuthFilter;
+import com.dss.gateway.filter.AuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -13,9 +13,9 @@ import static com.dss.gateway.util.enums.DssURI.*;
 @Slf4j
 public class GatewayConfiguration {
 
-    private final RegistrationAuthFilter filter;
+    private final AuthenticationFilter filter;
 
-    public GatewayConfiguration(RegistrationAuthFilter filter) {
+    public GatewayConfiguration(AuthenticationFilter filter) {
         this.filter = filter;
     }
 

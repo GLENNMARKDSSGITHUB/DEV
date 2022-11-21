@@ -751,8 +751,6 @@ H
 DSS3-MS-LOGIN-V1/pom.xml,9\5\95874be32f596c13255d44c782729f7da62813c2
 G
 DSS8-GATEWAY-V1/pom.xml,2\8\2845a928f9544b839301cf03eae9bc2234fe0f9e
-Ñ
-TDSS8-GATEWAY-V1/src/main/java/com/dss/gateway/util/exceptions/UserRoleException.java,5\c\5c9f487d0b61f22c6e921a4321216846197d6346
 h
 8DSS3-MS-LOGIN-V1/src/main/java/com/dss/dto/UsersDTO.java,8\e\8edf56d459b6d198b338b7a7dd3bb35c834d8766
 ã
@@ -765,18 +763,10 @@ FDSS2-REST-BE-V1/src/main/java/com/dss/security/DssUserDetailsImpl.java,e\0\e07
 MDSS2-REST-BE-V1/src/main/java/com/dss/security/DssUserDetailsServiceImpl.java,e\8\e8c06a66b708b0375ab2bca53733cf843969c079
 y
 IDSS2-REST-BE-V1/src/main/java/com/dss/security/SecurityConfiguration.java,5\f\5f3ffd4eb44caad0fdffc2a05aa700d0e0addba4
-~
-NDSS8-GATEWAY-V1/src/main/java/com/dss/gateway/service/ApiRouteServiceImpl.java,3\3\33ce9bdbd9e8355d57c383657fa53053305d042f
-ä
-ZDSS8-GATEWAY-V1/src/main/java/com/dss/gateway/util/exceptions/ResponseStatusException.java,b\6\b6c5f9a57ce26ecc3c02d4da1e6f9b3c527210c6
-ã
-[DSS8-GATEWAY-V1/src/main/java/com/dss/gateway/util/exceptions/JwtTokenMissingException.java,7\4\74563ebe78b24e982e515eee60010b2b5eb52ce0
 {
 KDSS8-GATEWAY-V1/src/main/java/com/dss/gateway/Dss8GatewayV1Application.java,d\d\dd2cc0b1bf2ff30f6763e6976a73719ccbc2b123
 {
 KDSS2-REST-BE-V1/src/main/java/com/dss/security/JwtAuthenticationFilter.java,d\d\ddd6e949afcb733800bef94e3c50280f631ec102
-ç
-]DSS8-GATEWAY-V1/src/main/java/com/dss/gateway/util/exceptions/JwtTokenMalformedException.java,a\c\ac38dfdb7dfc857e566a1dac68c511c1443ca549
 z
 JDSS2-REST-BE-V1/src/main/java/com/dss/security/JwtAuthorizationFilter.java,7\7\777d18542e237ceabe17781668efa04f32d8cc4e
 p
