@@ -9,21 +9,23 @@ spring:
 
   #SPRING DATASOURCE CONFIGURATION
   datasource:
-    url: jdbc:postgresql://localhost:5432/DSS_DB_V1
-    username: postgres
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: SYSTEM
     password: password
+    driver-class-name: oracle.jdbc.OracleDriver
 
   #JPA AND HIBERNATE PROPERTIES
   jpa:
-    database: postgresql
+    database: oracle
     properties:
       hibernate:
         jdbc:
           timezone: GMT+8
-        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        dialect: org.hibernate.dialect.Oracle9iDialect
         format_sql: true
     hibernate:
       ddl-auto: update
+      use-new-id-generator-mappings: false
     show-sql: true
 
 #SLF4J LOGBACK CONFIGURATION

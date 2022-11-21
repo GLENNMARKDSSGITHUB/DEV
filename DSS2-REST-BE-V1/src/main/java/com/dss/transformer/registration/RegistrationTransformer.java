@@ -24,11 +24,11 @@ import java.util.List;
 public class RegistrationTransformer {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Roles transformToRoles(Users user){
+    public Roles transformToRoles(UsersDTO userDto){
         Roles role = new Roles();
-        role.setDssRoleId(UserRoles.ROLE_ADMIN.getStrRoleId());
-        role.setUserRole(UserRoles.ROLE_ADMIN.getStrRole());
-        role.setUser(user);
+        role.setDssRoleId(userDto.getUserRoles().get(0).getDssRoleId());
+        role.setUserRole(userDto.getUserRoles().get(0).getUserRole());
+        role.setUser(this.transformToUsers(userDto));
         return role;
     }
 

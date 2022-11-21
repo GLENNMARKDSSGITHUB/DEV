@@ -43,7 +43,7 @@ public class RegistrationServiceImpl implements RegistrationService{
         userDto.setDssUserId(this.generateDssUserId());
         Users user = tf.transformToUsers(userDto);
         userRepository.save(user);
-        Roles role = tf.transformToRoles(user);
+        Roles role = tf.transformToRoles(userDto);
         rolesRepository.save(role);
         commonMsgDtl.setSuccess(true);
         commonMsgDtl.setContent(CommonStringUtility.SUCCESS_MSG_CREATE_ACCT);

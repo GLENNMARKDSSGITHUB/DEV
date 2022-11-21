@@ -7,6 +7,28 @@ spring:
     name: dss-api-gateway
   main:
     allow-bean-definition-overriding: true
+  #  autoconfigure:
+  #    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+  #SPRING DATASOURCE CONFIGURATION
+  datasource:
+    url: jdbc:postgresql://localhost:5432/DSS_DB_V1
+    username: postgres
+    password: password
+
+  #JPA AND HIBERNATE PROPERTIES
+  jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        jdbc:
+          timezone: GMT+8
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
   cloud:
     gateway:
       discovery:
@@ -23,3 +45,11 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+    prefer-ip-address: true
+
+#SLF4J LOGBACK CONFIGURATION
+logging:
+  level:
+    root: error
+    org.springframework: debug
+    org.hibernate: error

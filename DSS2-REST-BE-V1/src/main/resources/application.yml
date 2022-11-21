@@ -16,7 +16,7 @@ spring:
 
   #SPRING APPLICATION NAME
   application:
-    name: dds2-rest-be-v1
+    name: dss2-rest-be-v1
 
   #SPRING DATASOURCE CONFIGURATION
   datasource:
@@ -58,5 +58,3 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
-
-dss-file-path: C:\applogs\image\

@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Long> {
+public interface UsersRepository extends JpaRepository<Users, String> {
 
     @Query(value = "SELECT * FROM DSS_USERS WHERE EMAIL = :email", nativeQuery = true)
     List<Users> findUserByEmail(@Param("email") String email);

@@ -6,20 +6,20 @@
 
 package com.dss.entity.roles;
 
+import com.dss.entity.permission.Permission;
 import com.dss.entity.user.Users;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * This is an Entity Class for Roles
  */
 
+@Data
 @Entity
 @Table(name = "DSS_ROLES")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Roles {
@@ -33,6 +33,15 @@ public class Roles {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Users user;
+
+    @OneToMany(mappedBy = "roles")
+    private List<Permission> permission;
+
+    public Roles(String dssRoleId, String userRole, Users user) {
+        this.dssRoleId = dssRoleId;
+        this.userRole = userRole;
+        this.user = user;
+    }
 
     public Roles(String dssRoleId, String userRole) {
         this.dssRoleId = dssRoleId;

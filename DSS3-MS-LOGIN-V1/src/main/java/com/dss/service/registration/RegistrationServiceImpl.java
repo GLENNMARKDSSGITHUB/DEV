@@ -40,9 +40,10 @@ public class RegistrationServiceImpl implements RegistrationService{
     @Override
     public DssCommonMessageDetails registerAccount(UsersDTO userDto){
         DssCommonMessageDetails commonMsgDtl = new DssCommonMessageDetails();
-        Users user = tf.transformToUsers(userDto, this.generateDssUserId());
+        userDto.setDssUserId(this.generateDssUserId());
+        Users user = tf.transformToUsers(userDto);
         userRepository.save(user);
-        Roles role = tf.transformToRoles(user);
+        Roles role = tf.transformToRoles(userDto);
         rolesRepository.save(role);
         commonMsgDtl.setSuccess(true);
         commonMsgDtl.setContent(CommonStringUtility.SUCCESS_MSG_CREATE_ACCT);

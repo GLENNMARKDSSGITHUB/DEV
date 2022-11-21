@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

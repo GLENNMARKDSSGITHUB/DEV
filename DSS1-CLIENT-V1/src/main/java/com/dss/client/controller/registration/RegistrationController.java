@@ -1,6 +1,7 @@
 package com.dss.client.controller.registration;
 
 import com.dss.client.service.registration.RegistrationService;
+import com.dss.client.utils.DssCommonMessageDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,12 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping("/add-registration.do")
-    String addRegistration(@RequestBody Object obj){
+    DssCommonMessageDetails addRegistration(@RequestBody Object obj){
         return registrationService.addRegistration(obj);
+    }
+
+    @GetMapping("/display-registrations.do")
+    public DssCommonMessageDetails displayAccountRegistrations(){
+        return registrationService.displayAccountRegistrations();
     }
 }

@@ -1,18 +1,19 @@
 package com.dss.client.service.movie;
 
+import com.dss.client.utils.DssCommonMessageDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface MovieService {
 
-    String addDigiStreamMovie(@RequestBody Object obj);
+    DssCommonMessageDetails addDigiStreamMovie(@RequestBody Object obj);
 
-    List<Object> displayDigiStreamMovie();
+    DssCommonMessageDetails displayDigiStreamMovie();
 
-    List<Object> searchDigiStreamMovie(@PathVariable("movieTitle") String movieTitle);
+    DssCommonMessageDetails searchDigiStreamMovie(@PathVariable("movieTitle") String movieTitle);
 
-    String updateDigiStreamMovie(@RequestBody Object obj);
+    DssCommonMessageDetails updateDigiStreamMovie(@RequestBody Object obj);
 
-    String deleteDigiStreamMovie(@PathVariable("movieTitle") String movieTitle);
+    DssCommonMessageDetails deleteDigiStreamMovie(@PathVariable("movieTitle") String movieTitle);
 }

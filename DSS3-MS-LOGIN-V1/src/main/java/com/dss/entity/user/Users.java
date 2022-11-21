@@ -7,10 +7,8 @@
 package com.dss.entity.user;
 
 import com.dss.entity.roles.Roles;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.dss.entity.token.UsersToken;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,9 +18,9 @@ import java.util.List;
  * This is an Entity Class for Users
  */
 
+@Data
 @Entity
 @Table(name = "DSS_USERS")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Users {
@@ -65,6 +63,10 @@ public class Users {
     @ToString.Exclude
     private List<Roles> userRoles;
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<UsersToken> userToken;
+
     public Users(String dssUserId, String firstName, String lastName, String email, String password, String status, String cellphoneNumber, Date creationDate, String createdBy, Date lastModificationDate, String lastModifiedBy) {
         this.dssUserId = dssUserId;
         this.firstName = firstName;
@@ -77,5 +79,20 @@ public class Users {
         this.createdBy = createdBy;
         this.lastModificationDate = lastModificationDate;
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Users(String dssUserId, String firstName, String lastName, String email, String password, String status, String cellphoneNumber, Date creationDate, String createdBy, Date lastModificationDate, String lastModifiedBy, List<Roles> userRoles) {
+        this.dssUserId = dssUserId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.cellphoneNumber = cellphoneNumber;
+        this.creationDate = creationDate;
+        this.createdBy = createdBy;
+        this.lastModificationDate = lastModificationDate;
+        this.lastModifiedBy = lastModifiedBy;
+        this.userRoles = userRoles;
     }
 }

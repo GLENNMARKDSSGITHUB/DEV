@@ -7,11 +7,14 @@
 
 package com.dss.dto.user;
 
+import com.dss.entity.roles.Roles;
 import com.dss.util.annotations.*;
 import com.dss.util.utils.CommonStringUtility;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
+
 /**
  * This class is a Data Transfer Object for UsersDTO
  */
@@ -19,6 +22,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UsersDTO {
 
     private String dssUserId;
@@ -52,6 +56,8 @@ public class UsersDTO {
     private Date lastModificationDate;
 
     private String lastModifiedBy;
+
+    private List<Roles> userRoles;
 
     public UsersDTO(String dssUserId, String firstName, String lastName, String email, String password, String status, String cellphoneNumber, Date creationDate, String createdBy, Date lastModificationDate, String lastModifiedBy) {
         this.dssUserId = dssUserId;

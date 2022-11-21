@@ -4,6 +4,10 @@
     <file url="file://$PROJECT_DIR$/DSS2-REST-BE-V1/src/main/java/com/dss/repository/actors/ActorsRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/DSS2-REST-BE-V1/src/main/java/com/dss/repository/movie/DssMovieRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/DSS2-REST-BE-V1/src/main/java/com/dss/repository/reviews/ReviewsRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/DSS2-REST-BE-V1/src/main/java/com/dss/repository/roles/RolesRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/DSS2-REST-BE-V1/src/main/java/com/dss/repository/user/UsersRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/DSS3-MS-LOGIN-V1/src/main/java/com/dss/repository/roles/RolesRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/DSS3-MS-LOGIN-V1/src/main/java/com/dss/repository/user/UsersRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/DSS8-GATEWAY-V1/src/main/java/com/dss/gateway/repository/RequestPathRepository.java" dialect="GenericSQL" />
   </component>
 </project>

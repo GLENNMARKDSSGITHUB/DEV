@@ -24,28 +24,28 @@ import java.util.List;
 public class RegistrationTransformer {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public Roles transformToRoles(Users user){
-        return new Roles(
-                UserRoles.ROLE_ADMIN.getStrRoleId(),
-                UserRoles.ROLE_ADMIN.getStrRole(),
-                user
-        );
+    public Roles transformToRoles(UsersDTO userDto){
+        Roles role = new Roles();
+        role.setDssRoleId(userDto.getUserRoles().get(0).getDssRoleId());
+        role.setUserRole(userDto.getUserRoles().get(0).getUserRole());
+        role.setUser(this.transformToUsers(userDto));
+        return role;
     }
 
-    public Users transformToUsers(UsersDTO userDto, String ddsUserId){
-        return new Users(
-                ddsUserId,
-                userDto.getFirstName(),
-                userDto.getLastName(),
-                userDto.getEmail(),
-                encoder.encode(userDto.getPassword()),
-                UserStatus.ACTIVE.toString(),
-                userDto.getCellphoneNumber(),
-                new Date(),
-                UserRoles.ROLE_ADMIN.getStrRole(),
-                userDto.getLastModificationDate(),
-                userDto.getLastModifiedBy()
-        );
+    public Users transformToUsers(UsersDTO userDto){
+        Users user = new Users();
+        user.setDssUserId(userDto.getDssUserId());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(encoder.encode(userDto.getPassword()));
+        user.setStatus(userDto.getStatus());
+        user.setCellphoneNumber(userDto.getCellphoneNumber());
+        user.setCreationDate(new Date());
+        user.setCreatedBy(UserRoles.ROLE_ADMIN.getStrRole());
+        user.setLastModificationDate(userDto.getLastModificationDate());
+        user.setLastModifiedBy(userDto.getLastModifiedBy());
+        return user;
     }
 
     public List<Users> transformToUsersList(List<Users> userList){

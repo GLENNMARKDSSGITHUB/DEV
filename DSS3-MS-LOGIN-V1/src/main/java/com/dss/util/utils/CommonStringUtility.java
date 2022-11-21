@@ -13,6 +13,7 @@ package com.dss.util.utils;
 public class CommonStringUtility {
 
     /*==========================CUSTOM LOGIN ERROR MESSAGES FOR LOGIN ========================*/
+    public static final String  ERR_CODE_INACTIVE_SUSPENDED = "Inactive/Suspended Account.";
     public static final String  ERR_CODE_LOGIN_INCORRECT_PASSWORD = "The password you’ve entered is incorrect.";
     public static final String  ERR_CODE_LOGIN_EMAIL_NOT_CONNECTED = "The email you entered isn’t connected to an account.";
 

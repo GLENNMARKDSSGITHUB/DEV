@@ -30,7 +30,6 @@ import java.util.UUID;
 @Service
 public class ReviewsServiceImpl implements ReviewsService {
     private final ReviewsTransformer transformer = new ReviewsTransformer();
-    private final DssCommonMessageDetails commonMsgDtl = new DssCommonMessageDetails();
 
     @Autowired
     private DssMovieRepository dssMovieRepository;
@@ -40,6 +39,7 @@ public class ReviewsServiceImpl implements ReviewsService {
 
     @Override
     public DssCommonMessageDetails addReview(ReviewsDTO reviewsDto) {
+        DssCommonMessageDetails commonMsgDtl = new DssCommonMessageDetails();
         List<DssMovie> movieList = dssMovieRepository.findDssMovieByMovieId(reviewsDto.getMovieId());
         if(!movieList.isEmpty()){
             reviewsDto.setReviewId(this.generateDssReviewId());
@@ -55,6 +55,7 @@ public class ReviewsServiceImpl implements ReviewsService {
 
     @Override
     public DssCommonMessageDetails displayReviews() {
+        DssCommonMessageDetails commonMsgDtl = new DssCommonMessageDetails();
         List<Reviews> reviewsList = reviewsRepository.findAll();
         if(!reviewsList.isEmpty()){
             commonMsgDtl.setObjList(transformer.transformToReviews((reviewsList)));
