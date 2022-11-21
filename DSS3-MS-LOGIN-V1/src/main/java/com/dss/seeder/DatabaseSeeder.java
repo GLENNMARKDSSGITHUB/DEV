@@ -25,6 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -82,21 +83,44 @@ public class DatabaseSeeder {
             rolesRepository.saveAll(roleList);
 
             Permission pSuperAdmin = new Permission("RS1_P1", "P_SUPER_ADMIN", roleSuperAdmin);
-            Permission pAdmin = new Permission("RS2_P2", "P_ADMIN", roleSuperAdmin);
-            List<Permission> permissionList = Arrays.asList(pSuperAdmin, pAdmin);
+            List<Permission> permissionList = Collections.singletonList(pSuperAdmin);
             permissionRepository.saveAll(permissionList);
 
-            Resources rAccount = new Resources("P1_R1", "R_REGISTRATION", pSuperAdmin);
-            Resources rRbac = new Resources("P1_R2", "R_RBAC", pSuperAdmin);
+            Resources rAuth = new Resources("P1_R1", "R_AUTH", pSuperAdmin);
+            Resources rAccount = new Resources("P1_R2", "R_REGISTRATION", pSuperAdmin);
             Resources rMovie = new Resources("P1_R3", "R_MOVIE", pSuperAdmin);
             Resources rActor = new Resources("P1_R4", "R_ACTOR", pSuperAdmin);
             Resources rReviews = new Resources("P1_R5", "R_REVIEWS", pSuperAdmin);
-            List<Resources> resourcesList = Arrays.asList(rAccount, rRbac, rMovie, rActor, rReviews);
+            List<Resources> resourcesList = Arrays.asList(rAuth, rAccount, rMovie, rActor, rReviews);
             resourcesRepository.saveAll(resourcesList);
 
-            Action aCreateAcct = new Action("R1_A1", "A_CREATE_ACCOUNT", rAccount);
-            Action aViewAcct = new Action("R1_A2", "A_VIEW_ACCOUNT", rAccount);
-            List<Action> actionList = Arrays.asList(aCreateAcct, aViewAcct);
+            Action aAuth = new Action("R1_A1", "A_AUTH", rAccount);
+
+            Action aCreateAcct = new Action("R2_A1", "A_CREATE_ACCOUNT", rAccount);
+            Action aViewAcct = new Action("R2_A2", "A_VIEW_ACCOUNTS", rAccount);
+
+            Action aAddMovie = new Action("R3_A1", "A_ADD_MOVIE", rMovie);
+            Action aViewMovies = new Action("R3_A2", "A_VIEW_MOVIES", rMovie);
+            Action aSearchMovie = new Action("R3_A3", "A_SEARCH_MOVIE", rMovie);
+            Action aUpdateMovie = new Action("R3_A4", "A_UPDATE_MOVIE", rMovie);
+            Action aDeleteMovie = new Action("R3_A5", "A_DELETE_MOVIE", rMovie);
+
+            Action aAddActor = new Action("R4_A1", "A_ADD_ACTOR", rActor);
+            Action aViewActors = new Action("R4_A2", "A_VIEW_ACTORS", rActor);
+            Action aSearchActor = new Action("R4_A3", "A_SEARCH_ACTOR", rActor);
+            Action aUpdateActor = new Action("R4_A4", "A_UPDATE_ACTOR", rActor);
+            Action aDeleteActor = new Action("R4_A5", "A_DELETE_ACTOR", rActor);
+
+            Action aAddReview = new Action("R5_A1", "A_ADD_REVIEW", rReviews);
+            Action aViewReviews = new Action("R5_A2", "A_VIEW_REVIEWS", rReviews);
+
+            List<Action> actionList = Arrays.asList(
+                    aAuth,
+                    aCreateAcct, aViewAcct,
+                    aAddMovie, aViewMovies, aSearchMovie, aUpdateMovie, aDeleteMovie,
+                    aAddActor, aViewActors, aSearchActor, aUpdateActor, aDeleteActor,
+                    aAddReview, aViewReviews
+            );
             actionRepository.saveAll(actionList);
         }
     }

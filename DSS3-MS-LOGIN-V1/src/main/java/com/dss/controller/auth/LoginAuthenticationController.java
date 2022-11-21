@@ -7,7 +7,7 @@
 package com.dss.controller.auth;
 
 import com.dss.dto.UsersDTO;
-import com.dss.service.token.TokenService;
+import com.dss.service.auth.LoginAuthenticationService;
 import com.dss.util.utils.DssCommonMessageDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginAuthenticationController {
 
     @Autowired
-    private TokenService tokenService;
+    private LoginAuthenticationService loginAuthenticationService;
 
     /** Returns a DssCommonMessageDetails object if the user successfully login to the DSS web app or not
      * @param userDto userDto
@@ -33,6 +33,6 @@ public class LoginAuthenticationController {
      */
     @PostMapping("/login.do")
     public DssCommonMessageDetails login(@RequestBody UsersDTO userDto){
-        return tokenService.generateToken(userDto.getEmail(), userDto.getPassword());
+        return loginAuthenticationService.login(userDto.getEmail(), userDto.getPassword());
     }
 }

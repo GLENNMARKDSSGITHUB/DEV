@@ -35,6 +35,8 @@ public class AuthenticationFilter implements GatewayFilter {
     private RequestPathRepository requestPathRepository;
 
     private static final String ERR_HTTP_401_UNAUTHORIZED = "Unauthorized. You cannot consume this service.";
+    private static final String ERR_HTTP_400_BAD_REQUEST = "Bad Request. Invalid token.";
+    private static final String ERR_HTTP_415_UNSUPPORTED_MEDIA_TYPE = "Unexpected JSON exception.";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -55,7 +57,10 @@ public class AuthenticationFilter implements GatewayFilter {
                 //This method will validate the users' token.
                 jwtUtility.validateToken(token);
 
-                //check the resource String if user contains resourceCode String retrieved from the database
+                //This method will check the users' token expiration.
+                jwtUtility.checkTokenExpiration(token);
+
+                //check the resource String if user contains resourceCode String retrieved from the DSS_REQUEST_PATH table
                 String resourceCode = requestPathRepository.getPathCodeByRequestPath(path);
                 String resource = jwtUtility.getResources(token);
                 log.debug("JwtAuthenticationFilter | filter | resource : " + resource);
@@ -65,7 +70,7 @@ public class AuthenticationFilter implements GatewayFilter {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
                 }
 
-                //check the action String if user contains actionCode retrieved from the database
+                //check the action String if user contains actionCode retrieved from the DSS_REQUEST_PATH table
                 String action = jwtUtility.getAction(token);
                 String actionCode = requestPathRepository.getActionCodeByRequestPath(path);
                 log.debug("JwtAuthenticationFilter | filter | action : " + action);
@@ -75,9 +80,12 @@ public class AuthenticationFilter implements GatewayFilter {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
                 }
 
-            } catch (JwtTokenMalformedException | JwtTokenMissingException | JSONException ex) {
-                log.error("Bad Request. Invalid token.");
+            } catch (JwtTokenMalformedException | JwtTokenMissingException ex) {
+                log.error(ERR_HTTP_400_BAD_REQUEST);
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            } catch(JSONException ex){
+                log.error(ERR_HTTP_415_UNSUPPORTED_MEDIA_TYPE);
+                throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
             }
         }
         return chain.filter(exchange);

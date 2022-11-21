@@ -16,6 +16,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.dss.gateway.util.enums.ActionCode.*;
+import static com.dss.gateway.util.enums.RequestPath.*;
+import static com.dss.gateway.util.enums.ResourceCode.*;
+
 /**
  * This class is a Database Seeder for Incoming request paths
  */
@@ -35,21 +39,21 @@ public class DatabaseSeeder {
         List<RequestPath> pathList = requestPathRepository.findAll();
         if(pathList.isEmpty()){
             List<RequestPath> paths = Arrays.asList(
-                    new RequestPath("R_AUTH", "A_AUTH", "/API/login.do"),
-                    new RequestPath("R_REGISTRATION", "A_CREATE_ACCOUNT", "/API/registration/add-registration.do"),
-                    new RequestPath("R_REGISTRATION", "A_VIEW_ACCOUNT", "/API/registration/display-registrations.do"),
-                    new RequestPath("R_MOVIE", "A_ADD_MOVIE", "/API/movie-catalogue/add-digistreammovie.do"),
-                    new RequestPath("R_MOVIE", "A_VIEW_MOVIES", "/API/movie-catalogue/display-digistreammovie.do"),
-                    new RequestPath("R_MOVIE", "A_SEARCH_MOVIE", "/API/movie-catalogue/search-digistreammovie.do"),
-                    new RequestPath("R_MOVIE", "A_UPDATE_MOVIE", "/API/movie-catalogue/update-digistreammovie.do"),
-                    new RequestPath("R_MOVIE", "A_DELETE_MOVIE", "/API/movie-catalogue/delete-digistreammovie.do"),
-                    new RequestPath("R_ACTOR", "A_ADD_ACTOR", "/API/actor/add-actor.do"),
-                    new RequestPath("R_ACTOR", "A_VIEW_ACTOR", "/API/actor/display-actors.do"),
-                    new RequestPath("R_ACTOR", "A_SEARCH_ACTOR", "/API/actor/search-actor.do"),
-                    new RequestPath("R_ACTOR", "A_UPDATE_ACTOR", "/API/actor/update-actor.do"),
-                    new RequestPath("R_ACTOR", "A_DELETE_ACTOR", "/API/actor/delete-actor.do"),
-                    new RequestPath("R_REVIEW", "A_ADD_REVIEW", "/API/reviews/add-review.do"),
-                    new RequestPath("R_REVIEW", "A_VIEW_REVIEWS", "/API/reviews/display-reviews.do")
+                    new RequestPath(R_AUTH.getResourceCode(), A_AUTH.getActionCode(), REQUEST_PATH_AUTH_LOGIN.getEndpoint()),
+                    new RequestPath(R_REGISTRATION.getResourceCode(), A_CREATE_ACCOUNT.getActionCode(), REQUEST_PATH_REG_ACCT.getEndpoint()),
+                    new RequestPath(R_REGISTRATION.getResourceCode(), A_VIEW_ACCOUNTS.getActionCode(), REQUEST_PATH_REG_VIEW_ACCT.getEndpoint()),
+                    new RequestPath(R_MOVIE.getResourceCode(), A_ADD_MOVIE.getActionCode(), REQUEST_PATH_MOVIES_ADD_MOVIE.getEndpoint()),
+                    new RequestPath(R_MOVIE.getResourceCode(), A_VIEW_MOVIES.getActionCode(), REQUEST_PATH_MOVIES_VIEW_MOVIES.getEndpoint()),
+                    new RequestPath(R_MOVIE.getResourceCode(), A_SEARCH_MOVIE.getActionCode(), REQUEST_PATH_MOVIES_SEARCH_MOVIE.getEndpoint()),
+                    new RequestPath(R_MOVIE.getResourceCode(), A_UPDATE_MOVIE.getActionCode(), REQUEST_PATH_MOVIES_UPDATE_MOVIE.getEndpoint()),
+                    new RequestPath(R_MOVIE.getResourceCode(), A_DELETE_MOVIE.getActionCode(), REQUEST_PATH_MOVIES_DELETE_MOVIE.getEndpoint()),
+                    new RequestPath(R_ACTOR.getResourceCode(), A_ADD_ACTOR.getActionCode(), REQUEST_PATH_ACTORS_ADD_ACTOR.getEndpoint()),
+                    new RequestPath(R_ACTOR.getResourceCode(), A_VIEW_ACTORS.getActionCode(), REQUEST_PATH_ACTORS_VIEW_ACTORS.getEndpoint()),
+                    new RequestPath(R_ACTOR.getResourceCode(), A_SEARCH_ACTOR.getActionCode(), REQUEST_PATH_ACTORS_SEARCH_ACTOR.getEndpoint()),
+                    new RequestPath(R_ACTOR.getResourceCode(), A_UPDATE_ACTOR.getActionCode(), REQUEST_PATH_ACTORS_UPDATE_ACTOR.getEndpoint()),
+                    new RequestPath(R_ACTOR.getResourceCode(), A_DELETE_ACTOR.getActionCode(), REQUEST_PATH_ACTORS_DELETE_ACTOR.getEndpoint()),
+                    new RequestPath(R_REVIEW.getResourceCode(), A_ADD_REVIEW.getActionCode(), REQUEST_PATH_REVIEWS_ADD_REVIEW.getEndpoint()),
+                    new RequestPath(R_REVIEW.getResourceCode(), A_VIEW_REVIEWS.getActionCode(), REQUEST_PATH_REVIEWS_VIEW_REVIEWS.getEndpoint())
             );
             requestPathRepository.saveAll(paths);
         }
